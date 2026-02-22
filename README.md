@@ -1,68 +1,88 @@
-# NorthStar Client Portal (Angular + Express API + MongoDB)
+# NorthStar Client Portal
 
-This version removes **EJS entirely** and uses a **true Angular front end**.
+## Project Overview
+NorthStar Client Portal is an internal web application for managing client records.  
+It uses a **Node.js/Express backend** with **MongoDB/Mongoose** for data persistence, and an **Angular frontend** for dynamic client-side rendering.  
+The system allows advisors and compliance teams to **create, read, update, and delete client records**, while providing search and filtering by risk category.
 
-## Architecture
+## Installation Instructions
 
-- **frontend/**: Angular UI (routes, pages, forms, CRUD screens)
-- **backend/**: Express REST API + MongoDB persistence (Mongoose)
-
-## Prerequisites
-
-- Node.js (LTS recommended)
-- MongoDB running locally **or** a MongoDB Atlas connection string
-- Angular CLI (optional but recommended): `npm i -g @angular/cli`
-
-## Backend Setup (Express + MongoDB)
-
+1. Clone the repository:
 ```bash
+git clone <your-repo-url>
+cd NorthStar_Angular_Mongo
+
+2. Install backend dependencies:
+
 cd backend
 npm install
-cp .env.example .env
-# update MONGODB_URI if needed
-npm start
-```
 
-Optional seed from `backend/data/clients.json`:
+3. Install frontend dependencies:
 
-```bash
-npm run seed
-```
-
-API will be available at:
-- `http://localhost:3000/health`
-- `http://localhost:3000/api/clients`
-
-## Frontend Setup (Angular)
-
-```bash
-cd frontend
+cd ../frontend
 npm install
-npm start
-```
 
-Angular will run at:
-- `http://localhost:4200`
+4. Set up environment variables for backend:
+Create a .env file in backend/ with:
 
-A proxy configuration is included so the Angular UI can call the API using `/api/...` without CORS issues.
+PORT=3000
+MONGODB_URI=mongodb://127.0.0.1:27017/northstar
 
-## Routes (Angular)
+5. Seed the database with initial clients (optional):
 
-- `/` Home
-- `/clients` Client list + filters
-- `/clients/new` Create client
-- `/clients/:id` Client details
-- `/clients/:id/edit` Edit client
+cd ../backend
+node scripts/seed.js
+##Application Startup Instructions
+##Backend (API)
+cd backend
+node app.js
 
-## API Endpoints (Express)
+Runs on http://localhost:3000
 
-- `GET /api/clients` (supports `?riskCategory=High` and `?q=searchText`)
-- `GET /api/clients/:id`
-- `POST /api/clients`
-- `PUT /api/clients/:id`
-- `DELETE /api/clients/:id`
+API endpoints are prefixed with /api/clients
 
-## Notes
+## Frontend (Angular)
 
-- `clientRef` is enforced unique in MongoDB.
-- Risk category is displayed as a badge in list/detail screens.
+For development:
+
+cd frontend
+ng serve
+
+Runs on http://localhost:4200
+
+For production build:
+
+cd frontend
+ng build --configuration production
+
+Build output is in frontend/dist/northstar-frontend
+
+Can be served with any static server or integrated with Express for SSR.
+
+##List of Implemented Routes
+##Backend API Routes
+
+GET /api/clients — List all clients, supports query params riskCategory and q (search)
+
+GET /api/clients/:id — Get client by ID
+
+POST /api/clients — Create a new client
+
+PUT /api/clients/:id — Update a client
+
+DELETE /api/clients/:id — Delete a client
+
+##Frontend Routes (Angular)
+
+/ — Home page
+
+/clients — Client directory (list)
+
+/clients/new — Create new client
+
+/clients/:id — View client details
+
+/clients/:id/edit — Edit client details
+
+## Note: MongoDB must be running locally or accessible via MONGODB_URI.
+Angular frontend communicates with the backend via REST API endpoints.
