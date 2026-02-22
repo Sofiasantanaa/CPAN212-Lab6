@@ -1,0 +1,17 @@
+/* NorthStar light styling layer */
+:root {
+  --ns-primary: #1f4e79;
+}
+
+.navbar-brand {
+  font-weight: 600;
+}
+
+.badge-risk-low { background-color: #198754; }
+.badge-risk-medium { background-color: #ffc107; color: #212529; }
+.badge-risk-high { background-color: #dc3545; }
+
+.card-hover:hover {
+  transform: translateY(-1px);
+  transition: 120ms ease;
+}

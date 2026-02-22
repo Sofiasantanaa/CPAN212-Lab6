@@ -1,0 +1,71 @@
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <h2 class="mb-0">Clients</h2>
+    <div class="text-muted">Operational directory (MongoDB-backed)</div>
+  </div>
+  <a class="btn btn-success" routerLink="/clients/new">+ New Client</a>
+</div>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="row g-2 align-items-end">
+      <div class="col-md-3">
+        <label class="form-label">Risk Category</label>
+        <select class="form-select" [(ngModel)]="riskCategory" (change)="load()">
+          <option value="">All</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Search</label>
+        <input class="form-control" [(ngModel)]="q" placeholder="Name, email, client ref, advisor" (keyup.enter)="load()" />
+      </div>
+      <div class="col-md-3 d-flex gap-2">
+        <button class="btn btn-primary w-100" (click)="load()">Apply</button>
+        <button class="btn btn-outline-secondary w-100" (click)="q=''; riskCategory=''; load()">Reset</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+<div *ngIf="loading" class="alert alert-info">Loading clients...</div>
+
+<div class="table-responsive" *ngIf="!loading">
+  <table class="table table-striped align-middle">
+    <thead>
+      <tr>
+        <th>Client Ref</th>
+        <th>Client</th>
+        <th>Advisor</th>
+        <th>Classification</th>
+        <th>Risk</th>
+        <th class="text-end">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of clients">
+        <td class="fw-semibold">{{ c.clientRef }}</td>
+        <td>
+          <div class="fw-semibold">{{ c.fullName }}</div>
+          <div class="text-muted small">{{ c.email }}</div>
+        </td>
+        <td>{{ c.advisor }}</td>
+        <td>{{ c.classification }}</td>
+        <td>
+          <span class="badge" [ngClass]="badgeClass(c.riskCategory)">{{ c.riskCategory }}</span>
+        </td>
+        <td class="text-end">
+          <a class="btn btn-sm btn-outline-primary me-2" [routerLink]="['/clients', c._id]">View</a>
+          <a class="btn btn-sm btn-outline-secondary me-2" [routerLink]="['/clients', c._id, 'edit']">Edit</a>
+          <button class="btn btn-sm btn-outline-danger" (click)="remove(c)">Delete</button>
+        </td>
+      </tr>
+      <tr *ngIf="clients.length === 0">
+        <td colspan="6" class="text-center text-muted py-4">No clients found.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

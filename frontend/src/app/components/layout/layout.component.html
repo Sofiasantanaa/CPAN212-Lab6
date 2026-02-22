@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: var(--ns-primary)">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">NorthStar Client Portal</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/clients" routerLinkActive="active">Clients</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container my-4">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="border-top py-3">
+  <div class="container small text-muted">
+     &copy; {{ currentYear }} NorthStar Advisory Services
+  </div>
+</footer>

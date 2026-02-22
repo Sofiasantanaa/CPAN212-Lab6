@@ -1,0 +1,78 @@
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <h2 class="mb-0">{{ mode === 'create' ? 'New Client' : 'Edit Client' }}</h2>
+    <div class="text-muted">Client record management</div>
+  </div>
+  <a class="btn btn-outline-secondary" routerLink="/clients">Back</a>
+</div>
+
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+<div *ngIf="loading" class="alert alert-info">Loading...</div>
+
+<form class="card" [formGroup]="form" (ngSubmit)="save()">
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label">Client Ref</label>
+        <input class="form-control" formControlName="clientRef" placeholder="NS-0001" />
+        <div class="text-danger small" *ngIf="form.controls.clientRef.touched && form.controls.clientRef.invalid">
+          Client Ref is required.
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <label class="form-label">Full Name</label>
+        <input class="form-control" formControlName="fullName" placeholder="Jane Doe" />
+        <div class="text-danger small" *ngIf="form.controls.fullName.touched && form.controls.fullName.invalid">
+          Full Name is required.
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input class="form-control" formControlName="email" placeholder="jane.doe@northstar.com" />
+        <div class="text-danger small" *ngIf="form.controls.email.touched && form.controls.email.invalid">
+          Provide a valid email.
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Phone</label>
+        <input class="form-control" formControlName="phone" placeholder="(416) 555-0100" />
+        <div class="text-danger small" *ngIf="form.controls.phone.touched && form.controls.phone.invalid">
+          Phone is required.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Risk Category</label>
+        <select class="form-select" formControlName="riskCategory">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Classification</label>
+        <input class="form-control" formControlName="classification" placeholder="Standard" />
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Advisor</label>
+        <input class="form-control" formControlName="advisor" placeholder="Advisor Name" />
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Notes</label>
+        <textarea class="form-control" rows="4" formControlName="notes" placeholder="Operational notes for advisor/compliance"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer d-flex justify-content-end gap-2">
+    <button class="btn btn-primary" type="submit" [disabled]="saving">
+      {{ saving ? 'Saving...' : (mode === 'create' ? 'Create' : 'Update') }}
+    </button>
+  </div>
+</form>

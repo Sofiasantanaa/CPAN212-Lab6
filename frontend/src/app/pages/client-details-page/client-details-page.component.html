@@ -1,0 +1,58 @@
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+<div *ngIf="loading" class="alert alert-info">Loading client...</div>
+
+<div *ngIf="client" class="row g-3">
+  <div class="col-lg-8">
+    <div class="d-flex align-items-center justify-content-between">
+      <div>
+        <h2 class="mb-0">{{ client.fullName }}</h2>
+        <div class="text-muted">Client Ref: <span class="fw-semibold">{{ client.clientRef }}</span></div>
+      </div>
+      <span class="badge" [ngClass]="badgeClass(client.riskCategory)">{{ client.riskCategory }}</span>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="text-muted small">Email</div>
+            <div class="fw-semibold">{{ client.email }}</div>
+          </div>
+          <div class="col-md-6">
+            <div class="text-muted small">Phone</div>
+            <div class="fw-semibold">{{ client.phone }}</div>
+          </div>
+          <div class="col-md-6">
+            <div class="text-muted small">Advisor</div>
+            <div class="fw-semibold">{{ client.advisor }}</div>
+          </div>
+          <div class="col-md-6">
+            <div class="text-muted small">Classification</div>
+            <div class="fw-semibold">{{ client.classification }}</div>
+          </div>
+          <div class="col-12">
+            <div class="text-muted small">Notes</div>
+            <div>{{ client.notes || '—' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3">
+      <a class="btn btn-outline-secondary" routerLink="/clients">Back</a>
+      <a class="btn btn-outline-primary" [routerLink]="['/clients', client._id, 'edit']">Edit</a>
+      <button class="btn btn-outline-danger" (click)="remove()">Delete</button>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Operational Controls</h5>
+        <p class="text-muted mb-0">
+          Risk category is visually surfaced to support advisor preparation and compliance review.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
