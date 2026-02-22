@@ -1,0 +1,13 @@
+# Node
+node_modules/
+
+# Angular build output
+dist/
+out-tsc/
+
+# Environment files
+.env
+
+# Mac/VSCode temporary files
+.DS_Store
+.vscode/
